@@ -10,6 +10,7 @@
   "main": "./dist/index.cjs",
   "module": "./dist/index.module.js",
   "unpkg": "./dist/index.umd.js",
+  "amdName": "TouchControlClient",
   "scripts": {
     "build": "microbundle",
     "dev": "microbundle watch"
