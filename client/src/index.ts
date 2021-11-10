@@ -2,7 +2,7 @@ export interface Message {
   type: string;
 }
 
-export default class TouchControlClient extends EventTarget {
+export class TouchControlClient extends EventTarget {
   url: string;
   ws?: WebSocket;
 
