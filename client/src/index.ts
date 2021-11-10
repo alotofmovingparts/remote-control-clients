@@ -3,9 +3,9 @@ export interface Message {
 }
 
 enum TouchControlClientState {
-  CONNECTING,
-  OPEN,
-  CLOSED
+  Connecting = "CONNECTING",
+  Open = "OPEN",
+  Closed = "CLOSED"
 }
 
 export default class TouchControlClient extends EventTarget {
@@ -16,20 +16,20 @@ export default class TouchControlClient extends EventTarget {
   constructor(url: string) {
     super();
     this.url = url;
-    this.state = TouchControlClientState.CLOSED;
+    this.state = TouchControlClientState.Closed;
     this.addEventListener('message', (event: Event) => console.log(event));
   }
 
   connect(callback?: (err: Error | null, initialValues: any, clients: any) => void) {
-    this.state = TouchControlClientState.CONNECTING;
+    this.state = TouchControlClientState.Connecting;
     this.ws = new WebSocket(this.url);
     this.ws.onopen = (event: Event) => {
-      this.state = TouchControlClientState.OPEN;
+      this.state = TouchControlClientState.Open;
       const e = new Event('open');
       this.dispatchEvent(e);
     };
     this.ws.onclose = (event: CloseEvent) => {
-      this.state = TouchControlClientState.CLOSED;
+      this.state = TouchControlClientState.Closed;
       const e = new CloseEvent('close', {code: event.code});
       this.dispatchEvent(e);
     };

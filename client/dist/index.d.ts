@@ -2,9 +2,9 @@ export interface Message {
     type: string;
 }
 declare enum TouchControlClientState {
-    CONNECTING = 0,
-    OPEN = 1,
-    CLOSED = 2
+    Connecting = "CONNECTING",
+    Open = "OPEN",
+    Closed = "CLOSED"
 }
 export default class TouchControlClient extends EventTarget {
     url: string;
