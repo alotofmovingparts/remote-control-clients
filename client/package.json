@@ -1,6 +1,7 @@
 {
   "name": "touch-control-client",
   "type": "module",
+  "version": "0.0.1",
   "source": "src/index.ts",
   "exports": {
     "require": "./dist/index.cjs",
