@@ -105,7 +105,7 @@ export default class TouchControlClient extends EventTarget {
     };
     this.ws.onmessage = (event: MessageEvent) => {
       const data = JSON.parse(event.data) as ServerMessage;
-
+      console.log(data.type)
       let message:
         ServerSetResponseMessage |
         ServerReadResponseMessage |
@@ -145,6 +145,7 @@ export default class TouchControlClient extends EventTarget {
           }
           break;
         case "connect_response":
+          console.log('connect response')
           message = data as ServerConnectMessage;
           this.state = TouchControlClientState.Connected;
           console.log(message.uuid, this._callbacks, message.uuid in this._callbacks)
