@@ -18,7 +18,7 @@ interface ClientSetMessage extends ClientMessage {
 
 interface ClientReadMessage extends ClientMessage {
   type: "read";
-  names?: string[];
+  names: string[];
 }
 
 interface ClientClientsMessage extends ClientMessage {
@@ -87,7 +87,7 @@ export default class TouchControlClient extends EventTarget {
     this._callbacks = {};
   }
 
-  connect(callback?: (err?: Error | null, initialValues?: any, clients?: any) => void) {
+  connect(callback?: (err: Error | null, initialValues?: any, clients?: any) => void) {
     this.state = TouchControlClientState.Connecting;
     this.ws = new WebSocket(this.url);
     this.ws.onopen = (event: Event) => {
