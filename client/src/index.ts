@@ -147,6 +147,7 @@ export default class TouchControlClient extends EventTarget {
         case "connect_response":
           message = data as ServerConnectMessage;
           this.state = TouchControlClientState.Connected;
+          console.log(message.uuid, this._callbacks, message.uuid in this._callbacks)
           if (message.uuid in this._callbacks) {
             const callback = this._callbacks[message.uuid]
             delete this._callbacks[message.uuid];
