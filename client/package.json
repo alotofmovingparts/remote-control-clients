@@ -16,6 +16,8 @@
     "dev": "microbundle watch"
   },
   "devDependencies": {
-    "microbundle": "^0.14.1"
+    "@types/uuid": "^8.3.3",
+    "microbundle": "^0.14.1",
+    "uuid": "^8.3.2"
   }
 }
