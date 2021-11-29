@@ -11,6 +11,9 @@ export default class TouchControlClient extends EventTarget {
     _callbacks: {
         [id: UUID]: (err: Error | null, ...args: any) => void;
     };
+    _listeners: {
+        [event: string]: ((...args: any) => void)[];
+    };
     constructor(url: string);
     connect(callback?: (err: Error | null, initialValues?: any, clients?: any) => void): void;
     set(name: string, value: any, callback?: (err: Error | null) => void): void;
@@ -19,5 +22,7 @@ export default class TouchControlClient extends EventTarget {
     }) => void): void;
     clients(callback?: (err: Error | null) => void): void;
     disconnect(): void;
+    on(name: string, listener: (...args: any) => void): void;
+    off(name: string, listener: (...args: any) => void): void;
 }
 export {};

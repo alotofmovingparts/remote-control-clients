@@ -66,7 +66,7 @@ interface ServerErrorMessage extends ServerMessage {
 }
 
 
-type TouchControlEventType = "connect" | "disconnect" | "update" | "error";
+type TouchControlEventType = "connect" | "update" | "disconnect" | "error";
 
 enum TouchControlClientState {
   Connecting = "CONNECTING",
@@ -79,12 +79,14 @@ export default class TouchControlClient extends EventTarget {
   ws?: WebSocket;
   state: TouchControlClientState;
   _callbacks: { [id: UUID]: (err: Error | null, ...args: any) => void }
+  _listeners: { [event: string]: ((...args: any) => void)[] }
 
   constructor(url: string) {
     super();
     this.url = url;
     this.state = TouchControlClientState.Disconnected;
     this._callbacks = {};
+    this._listeners = {};
   }
 
   connect(callback?: (err: Error | null, initialValues?: any, clients?: any) => void) {
@@ -216,5 +218,13 @@ export default class TouchControlClient extends EventTarget {
 
   disconnect() {
     this.ws?.close();
+  }
+
+  on(name: string, listener: (...args: any) => void) {
+    this.addEventListener(name, listener);
+  }
+
+  off(name: string, listener: (...args: any) => void) {
+    this.removeEventListener(name, listener);
   }
 }
