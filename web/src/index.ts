@@ -1,5 +1,5 @@
 import { v4 as uuid } from 'uuid';
-import superjson from 'superjson'
+import superjson from 'superjson';
 import { wsLink, createWSClient } from '@trpc/client/links/wsLink';
 import { createTRPCClient, TRPCClient } from '@trpc/client';
 import type { AppRouter } from './@types/server/src/server/routers/_app';
@@ -16,27 +16,29 @@ export default class RCClient {
   trpcClient: TRPCClient<AppRouter>;
 
   constructor(opts: RCClientOptions) {
-    if (typeof opts !== 'object') throw new Error('RCClient: options required')
+    if (typeof opts !== 'object') throw new Error('RCClient: options required');
     if (
       typeof opts['hostname'] !== 'string' ||
       opts['hostname'] === '' ||
-      opts['hostname'].startsWith('http') 
+      opts['hostname'].startsWith('http')
     ) {
-      throw new Error(`RCClient: 'hostname' required, e.g. 'example.com'`)
+      throw new Error(`RCClient: 'hostname' required, e.g. 'example.com'`);
     }
     if (
       typeof opts['channelKey'] !== 'string' ||
-      !(new RegExp('^[A-Za-z0-9-_.~]*$')).test(opts['channelKey'])
+      !new RegExp('^[A-Za-z0-9-_.~]*$').test(opts['channelKey'])
     ) {
-      throw new Error(`RCClient: 'channelKey' required, e.g. 'abcdefghij_0123456789'`)
+      throw new Error(
+        `RCClient: 'channelKey' required, e.g. 'abcdefghij_0123456789'`
+      );
     }
-    const {hostname, channelKey, secure = true} = opts;
+    const { hostname, channelKey, secure = true } = opts;
     this.uuid = uuid();
     this.channelKey = channelKey;
 
     const clientBase = `${secure ? 'https' : 'http'}://${hostname}`;
     const clientURL = new URL('/api/trpc', clientBase).toString();
-    const wsURL = `${secure ? 'wss' : 'ws'}://${hostname}`
+    const wsURL = `${secure ? 'wss' : 'ws'}://${hostname}`;
     const wsClient = createWSClient({
       url: wsURL,
     });
@@ -50,14 +52,17 @@ export default class RCClient {
     });
   }
 
-  async update(data: {[name: string]: any }, callback?: (err: unknown | null) => void) {
+  async update(
+    data: { [name: string]: any },
+    callback?: (err: unknown | null) => void
+  ) {
     try {
       await this.trpcClient.mutation('channel.update', {
         key: this.channelKey,
         data: {
-          data
+          data,
         },
-        uuid: this.uuid
+        uuid: this.uuid,
       });
       if (callback) callback(null);
     } catch (error) {
@@ -65,28 +70,32 @@ export default class RCClient {
     }
   }
 
-  subscribe(callback: (err: unknown | null, data?: {[name: string]: any; }) => void) {
+  subscribe(
+    callback: (err: unknown | null, data?: { [name: string]: any }) => void
+  ) {
     return this.trpcClient.subscription(
       'channel.onUpdate',
       {
         key: this.channelKey,
-        uuid: this.uuid
+        uuid: this.uuid,
       },
       {
         onNext: (res) => {
           if (res.type === 'data') {
-            callback(null, res.data.data as {[name: string]: any });
+            callback(null, res.data.data as { [name: string]: any });
           }
         },
         onError: (err) => callback(err),
       }
-    )
+    );
   }
 
-  async read(callback: (err: unknown | null, data?: { [name: string]: any; }) => void) {
+  async read(
+    callback: (err: unknown | null, data?: { [name: string]: any }) => void
+  ) {
     try {
       const data = await this.trpcClient.query('channel.read', this.channelKey);
-      callback(null, data.data as {[name: string]: any });
+      callback(null, data.data as { [name: string]: any });
     } catch (error) {
       callback(error);
     }
