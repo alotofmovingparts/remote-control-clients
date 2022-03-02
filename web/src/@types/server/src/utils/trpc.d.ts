@@ -110,7 +110,13 @@ export declare const trpc: {
             data: {
                 data?: any;
             };
-        }, import(".prisma/client").Channel>>, "channel.">, import("@trpc/server").Prefixer<{}, "project."> & import("@trpc/server").Prefixer<Record<"onUpdate", import("@trpc/server/dist/declarations/src/internals/procedure").Procedure<{
+        }, {
+            uuid?: string | undefined;
+            key: string;
+            data: {
+                data?: any;
+            };
+        }>>, "channel.">, import("@trpc/server").Prefixer<{}, "project."> & import("@trpc/server").Prefixer<Record<"onUpdate", import("@trpc/server/dist/declarations/src/internals/procedure").Procedure<{
             session: import("next-auth").Session | null;
             prisma: import(".prisma/client").PrismaClient<import(".prisma/client").Prisma.PrismaClientOptions, never, import(".prisma/client").Prisma.RejectOnNotFound | import(".prisma/client").Prisma.RejectPerOperation | undefined>;
         }, {
@@ -122,7 +128,9 @@ export declare const trpc: {
         }, {
             uuid?: string | undefined;
             key: string;
-        }, import("@trpc/server").Subscription<import(".prisma/client").Channel>>>, "channel.">, import("@trpc/server").DefaultErrorShape>>;
+        }, import("@trpc/server").Subscription<{
+            data: import(".prisma/client").Prisma.JsonObject;
+        }>>>, "channel.">, import("@trpc/server").DefaultErrorShape>>;
         children: import("react").ReactNode;
         isPrepass?: boolean | undefined;
         ssrContext?: unknown;
@@ -229,7 +237,13 @@ export declare const trpc: {
         data: {
             data?: any;
         };
-    }, import(".prisma/client").Channel>>, "channel.">, import("@trpc/server").Prefixer<{}, "project."> & import("@trpc/server").Prefixer<Record<"onUpdate", import("@trpc/server/dist/declarations/src/internals/procedure").Procedure<{
+    }, {
+        uuid?: string | undefined;
+        key: string;
+        data: {
+            data?: any;
+        };
+    }>>, "channel.">, import("@trpc/server").Prefixer<{}, "project."> & import("@trpc/server").Prefixer<Record<"onUpdate", import("@trpc/server/dist/declarations/src/internals/procedure").Procedure<{
         session: import("next-auth").Session | null;
         prisma: import(".prisma/client").PrismaClient<import(".prisma/client").Prisma.PrismaClientOptions, never, import(".prisma/client").Prisma.RejectOnNotFound | import(".prisma/client").Prisma.RejectPerOperation | undefined>;
     }, {
@@ -241,7 +255,9 @@ export declare const trpc: {
     }, {
         uuid?: string | undefined;
         key: string;
-    }, import("@trpc/server").Subscription<import(".prisma/client").Channel>>>, "channel.">, import("@trpc/server").DefaultErrorShape>>) => import("@trpc/react").TRPCClient<import("@trpc/server/dist/declarations/src/router").Router<{
+    }, import("@trpc/server").Subscription<{
+        data: import(".prisma/client").Prisma.JsonObject;
+    }>>>, "channel.">, import("@trpc/server").DefaultErrorShape>>) => import("@trpc/react").TRPCClient<import("@trpc/server/dist/declarations/src/router").Router<{
         session: import("next-auth").Session | null;
         prisma: import(".prisma/client").PrismaClient<import(".prisma/client").Prisma.PrismaClientOptions, never, import(".prisma/client").Prisma.RejectOnNotFound | import(".prisma/client").Prisma.RejectPerOperation | undefined>;
     }, {
@@ -343,7 +359,13 @@ export declare const trpc: {
         data: {
             data?: any;
         };
-    }, import(".prisma/client").Channel>>, "channel.">, import("@trpc/server").Prefixer<{}, "project."> & import("@trpc/server").Prefixer<Record<"onUpdate", import("@trpc/server/dist/declarations/src/internals/procedure").Procedure<{
+    }, {
+        uuid?: string | undefined;
+        key: string;
+        data: {
+            data?: any;
+        };
+    }>>, "channel.">, import("@trpc/server").Prefixer<{}, "project."> & import("@trpc/server").Prefixer<Record<"onUpdate", import("@trpc/server/dist/declarations/src/internals/procedure").Procedure<{
         session: import("next-auth").Session | null;
         prisma: import(".prisma/client").PrismaClient<import(".prisma/client").Prisma.PrismaClientOptions, never, import(".prisma/client").Prisma.RejectOnNotFound | import(".prisma/client").Prisma.RejectPerOperation | undefined>;
     }, {
@@ -355,7 +377,9 @@ export declare const trpc: {
     }, {
         uuid?: string | undefined;
         key: string;
-    }, import("@trpc/server").Subscription<import(".prisma/client").Channel>>>, "channel.">, import("@trpc/server").DefaultErrorShape>>;
+    }, import("@trpc/server").Subscription<{
+        data: import(".prisma/client").Prisma.JsonObject;
+    }>>>, "channel.">, import("@trpc/server").DefaultErrorShape>>;
     useContext: () => import("@trpc/react/dist/declarations/src/internals/context").TRPCContextState<import("@trpc/server/dist/declarations/src/router").Router<{
         session: import("next-auth").Session | null;
         prisma: import(".prisma/client").PrismaClient<import(".prisma/client").Prisma.PrismaClientOptions, never, import(".prisma/client").Prisma.RejectOnNotFound | import(".prisma/client").Prisma.RejectPerOperation | undefined>;
@@ -458,7 +482,13 @@ export declare const trpc: {
         data: {
             data?: any;
         };
-    }, import(".prisma/client").Channel>>, "channel.">, import("@trpc/server").Prefixer<{}, "project."> & import("@trpc/server").Prefixer<Record<"onUpdate", import("@trpc/server/dist/declarations/src/internals/procedure").Procedure<{
+    }, {
+        uuid?: string | undefined;
+        key: string;
+        data: {
+            data?: any;
+        };
+    }>>, "channel.">, import("@trpc/server").Prefixer<{}, "project."> & import("@trpc/server").Prefixer<Record<"onUpdate", import("@trpc/server/dist/declarations/src/internals/procedure").Procedure<{
         session: import("next-auth").Session | null;
         prisma: import(".prisma/client").PrismaClient<import(".prisma/client").Prisma.PrismaClientOptions, never, import(".prisma/client").Prisma.RejectOnNotFound | import(".prisma/client").Prisma.RejectPerOperation | undefined>;
     }, {
@@ -470,7 +500,9 @@ export declare const trpc: {
     }, {
         uuid?: string | undefined;
         key: string;
-    }, import("@trpc/server").Subscription<import(".prisma/client").Channel>>>, "channel.">, import("@trpc/server").DefaultErrorShape>, unknown>;
+    }, import("@trpc/server").Subscription<{
+        data: import(".prisma/client").Prisma.JsonObject;
+    }>>>, "channel.">, import("@trpc/server").DefaultErrorShape>, unknown>;
     useQuery: <TPath extends "project.findAll" | "project.find" | "channel.read">(pathAndInput: [path: TPath, ...args: import("@trpc/server").inferHandlerInput<(import("@trpc/server").Prefixer<{} & Record<"findAll", import("@trpc/server/dist/declarations/src/internals/procedure").Procedure<{
         session: import("next-auth").Session | null;
         prisma: import(".prisma/client").PrismaClient<import(".prisma/client").Prisma.PrismaClientOptions, never, import(".prisma/client").Prisma.RejectOnNotFound | import(".prisma/client").Prisma.RejectPerOperation | undefined>;
@@ -641,7 +673,13 @@ export declare const trpc: {
         data: {
             data?: any;
         };
-    }, import(".prisma/client").Channel>>, "channel.">, import("@trpc/server").Prefixer<{}, "project."> & import("@trpc/server").Prefixer<Record<"onUpdate", import("@trpc/server/dist/declarations/src/internals/procedure").Procedure<{
+    }, {
+        uuid?: string | undefined;
+        key: string;
+        data: {
+            data?: any;
+        };
+    }>>, "channel.">, import("@trpc/server").Prefixer<{}, "project."> & import("@trpc/server").Prefixer<Record<"onUpdate", import("@trpc/server/dist/declarations/src/internals/procedure").Procedure<{
         session: import("next-auth").Session | null;
         prisma: import(".prisma/client").PrismaClient<import(".prisma/client").Prisma.PrismaClientOptions, never, import(".prisma/client").Prisma.RejectOnNotFound | import(".prisma/client").Prisma.RejectPerOperation | undefined>;
     }, {
@@ -653,7 +691,9 @@ export declare const trpc: {
     }, {
         uuid?: string | undefined;
         key: string;
-    }, import("@trpc/server").Subscription<import(".prisma/client").Channel>>>, "channel.">, import("@trpc/server").DefaultErrorShape>>> | undefined) => import("react-query").UseQueryResult<{
+    }, import("@trpc/server").Subscription<{
+        data: import(".prisma/client").Prisma.JsonObject;
+    }>>>, "channel.">, import("@trpc/server").DefaultErrorShape>>> | undefined) => import("react-query").UseQueryResult<{
         "project.findAll": {
             input: void | null | undefined;
             output: (import(".prisma/client").Project & {
@@ -776,7 +816,13 @@ export declare const trpc: {
         data: {
             data?: any;
         };
-    }, import(".prisma/client").Channel>>, "channel.">, import("@trpc/server").Prefixer<{}, "project."> & import("@trpc/server").Prefixer<Record<"onUpdate", import("@trpc/server/dist/declarations/src/internals/procedure").Procedure<{
+    }, {
+        uuid?: string | undefined;
+        key: string;
+        data: {
+            data?: any;
+        };
+    }>>, "channel.">, import("@trpc/server").Prefixer<{}, "project."> & import("@trpc/server").Prefixer<Record<"onUpdate", import("@trpc/server/dist/declarations/src/internals/procedure").Procedure<{
         session: import("next-auth").Session | null;
         prisma: import(".prisma/client").PrismaClient<import(".prisma/client").Prisma.PrismaClientOptions, never, import(".prisma/client").Prisma.RejectOnNotFound | import(".prisma/client").Prisma.RejectPerOperation | undefined>;
     }, {
@@ -788,7 +834,9 @@ export declare const trpc: {
     }, {
         uuid?: string | undefined;
         key: string;
-    }, import("@trpc/server").Subscription<import(".prisma/client").Channel>>>, "channel.">, import("@trpc/server").DefaultErrorShape>>>;
+    }, import("@trpc/server").Subscription<{
+        data: import(".prisma/client").Prisma.JsonObject;
+    }>>>, "channel.">, import("@trpc/server").DefaultErrorShape>>>;
     useMutation: <TPath_1 extends "project.create" | "project.update" | "project.delete" | "channel.update">(path: TPath_1 | [TPath_1], opts?: import("@trpc/react").UseTRPCMutationOptions<{
         "project.create": {
             input: {
@@ -831,7 +879,13 @@ export declare const trpc: {
                     data?: any;
                 };
             };
-            output: import(".prisma/client").Channel;
+            output: {
+                uuid?: string | undefined;
+                key: string;
+                data: {
+                    data?: any;
+                };
+            };
         };
     }[TPath_1]["input"], import("@trpc/react").TRPCClientErrorLike<import("@trpc/server/dist/declarations/src/router").Router<{
         session: import("next-auth").Session | null;
@@ -935,7 +989,13 @@ export declare const trpc: {
         data: {
             data?: any;
         };
-    }, import(".prisma/client").Channel>>, "channel.">, import("@trpc/server").Prefixer<{}, "project."> & import("@trpc/server").Prefixer<Record<"onUpdate", import("@trpc/server/dist/declarations/src/internals/procedure").Procedure<{
+    }, {
+        uuid?: string | undefined;
+        key: string;
+        data: {
+            data?: any;
+        };
+    }>>, "channel.">, import("@trpc/server").Prefixer<{}, "project."> & import("@trpc/server").Prefixer<Record<"onUpdate", import("@trpc/server/dist/declarations/src/internals/procedure").Procedure<{
         session: import("next-auth").Session | null;
         prisma: import(".prisma/client").PrismaClient<import(".prisma/client").Prisma.PrismaClientOptions, never, import(".prisma/client").Prisma.RejectOnNotFound | import(".prisma/client").Prisma.RejectPerOperation | undefined>;
     }, {
@@ -947,7 +1007,9 @@ export declare const trpc: {
     }, {
         uuid?: string | undefined;
         key: string;
-    }, import("@trpc/server").Subscription<import(".prisma/client").Channel>>>, "channel.">, import("@trpc/server").DefaultErrorShape>>, {
+    }, import("@trpc/server").Subscription<{
+        data: import(".prisma/client").Prisma.JsonObject;
+    }>>>, "channel.">, import("@trpc/server").DefaultErrorShape>>, {
         "project.create": {
             input: {
                 location?: string | undefined;
@@ -989,7 +1051,13 @@ export declare const trpc: {
                     data?: any;
                 };
             };
-            output: import(".prisma/client").Channel;
+            output: {
+                uuid?: string | undefined;
+                key: string;
+                data: {
+                    data?: any;
+                };
+            };
         };
     }[TPath_1]["output"]> | undefined) => import("react-query").UseMutationResult<{
         "project.create": {
@@ -1033,7 +1101,13 @@ export declare const trpc: {
                     data?: any;
                 };
             };
-            output: import(".prisma/client").Channel;
+            output: {
+                uuid?: string | undefined;
+                key: string;
+                data: {
+                    data?: any;
+                };
+            };
         };
     }[TPath_1]["output"], import("@trpc/react").TRPCClientErrorLike<import("@trpc/server/dist/declarations/src/router").Router<{
         session: import("next-auth").Session | null;
@@ -1137,7 +1211,13 @@ export declare const trpc: {
         data: {
             data?: any;
         };
-    }, import(".prisma/client").Channel>>, "channel.">, import("@trpc/server").Prefixer<{}, "project."> & import("@trpc/server").Prefixer<Record<"onUpdate", import("@trpc/server/dist/declarations/src/internals/procedure").Procedure<{
+    }, {
+        uuid?: string | undefined;
+        key: string;
+        data: {
+            data?: any;
+        };
+    }>>, "channel.">, import("@trpc/server").Prefixer<{}, "project."> & import("@trpc/server").Prefixer<Record<"onUpdate", import("@trpc/server/dist/declarations/src/internals/procedure").Procedure<{
         session: import("next-auth").Session | null;
         prisma: import(".prisma/client").PrismaClient<import(".prisma/client").Prisma.PrismaClientOptions, never, import(".prisma/client").Prisma.RejectOnNotFound | import(".prisma/client").Prisma.RejectPerOperation | undefined>;
     }, {
@@ -1149,7 +1229,9 @@ export declare const trpc: {
     }, {
         uuid?: string | undefined;
         key: string;
-    }, import("@trpc/server").Subscription<import(".prisma/client").Channel>>>, "channel.">, import("@trpc/server").DefaultErrorShape>>, {
+    }, import("@trpc/server").Subscription<{
+        data: import(".prisma/client").Prisma.JsonObject;
+    }>>>, "channel.">, import("@trpc/server").DefaultErrorShape>>, {
         "project.create": {
             input: {
                 location?: string | undefined;
@@ -1191,7 +1273,13 @@ export declare const trpc: {
                     data?: any;
                 };
             };
-            output: import(".prisma/client").Channel;
+            output: {
+                uuid?: string | undefined;
+                key: string;
+                data: {
+                    data?: any;
+                };
+            };
         };
     }[TPath_1]["input"], unknown>;
     useSubscription: <TPath_2 extends "channel.onUpdate", TOutput extends ReturnType<import("@trpc/server").ThenArg<ReturnType<(import("@trpc/server").Prefixer<{}, "project."> & import("@trpc/server").Prefixer<Record<"onUpdate", import("@trpc/server/dist/declarations/src/internals/procedure").Procedure<{
@@ -1206,7 +1294,9 @@ export declare const trpc: {
     }, {
         uuid?: string | undefined;
         key: string;
-    }, import("@trpc/server").Subscription<import(".prisma/client").Channel>>>, "channel.">)[TPath_2]["call"]>>["output"]>>(pathAndInput: [path: TPath_2, ...args: import("@trpc/server").inferHandlerInput<(import("@trpc/server").Prefixer<{}, "project."> & import("@trpc/server").Prefixer<Record<"onUpdate", import("@trpc/server/dist/declarations/src/internals/procedure").Procedure<{
+    }, import("@trpc/server").Subscription<{
+        data: import(".prisma/client").Prisma.JsonObject;
+    }>>>, "channel.">)[TPath_2]["call"]>>["output"]>>(pathAndInput: [path: TPath_2, ...args: import("@trpc/server").inferHandlerInput<(import("@trpc/server").Prefixer<{}, "project."> & import("@trpc/server").Prefixer<Record<"onUpdate", import("@trpc/server/dist/declarations/src/internals/procedure").Procedure<{
         session: import("next-auth").Session | null;
         prisma: import(".prisma/client").PrismaClient<import(".prisma/client").Prisma.PrismaClientOptions, never, import(".prisma/client").Prisma.RejectOnNotFound | import(".prisma/client").Prisma.RejectPerOperation | undefined>;
     }, {
@@ -1218,7 +1308,9 @@ export declare const trpc: {
     }, {
         uuid?: string | undefined;
         key: string;
-    }, import("@trpc/server").Subscription<import(".prisma/client").Channel>>>, "channel.">)[TPath_2]>], opts: {
+    }, import("@trpc/server").Subscription<{
+        data: import(".prisma/client").Prisma.JsonObject;
+    }>>>, "channel.">)[TPath_2]>], opts: {
         enabled?: boolean | undefined;
         onError?: ((err: import("@trpc/react").TRPCClientErrorLike<import("@trpc/server/dist/declarations/src/router").Router<{
             session: import("next-auth").Session | null;
@@ -1322,7 +1414,13 @@ export declare const trpc: {
             data: {
                 data?: any;
             };
-        }, import(".prisma/client").Channel>>, "channel.">, import("@trpc/server").Prefixer<{}, "project."> & import("@trpc/server").Prefixer<Record<"onUpdate", import("@trpc/server/dist/declarations/src/internals/procedure").Procedure<{
+        }, {
+            uuid?: string | undefined;
+            key: string;
+            data: {
+                data?: any;
+            };
+        }>>, "channel.">, import("@trpc/server").Prefixer<{}, "project."> & import("@trpc/server").Prefixer<Record<"onUpdate", import("@trpc/server/dist/declarations/src/internals/procedure").Procedure<{
             session: import("next-auth").Session | null;
             prisma: import(".prisma/client").PrismaClient<import(".prisma/client").Prisma.PrismaClientOptions, never, import(".prisma/client").Prisma.RejectOnNotFound | import(".prisma/client").Prisma.RejectPerOperation | undefined>;
         }, {
@@ -1334,7 +1432,9 @@ export declare const trpc: {
         }, {
             uuid?: string | undefined;
             key: string;
-        }, import("@trpc/server").Subscription<import(".prisma/client").Channel>>>, "channel.">, import("@trpc/server").DefaultErrorShape>>) => void) | undefined;
+        }, import("@trpc/server").Subscription<{
+            data: import(".prisma/client").Prisma.JsonObject;
+        }>>>, "channel.">, import("@trpc/server").DefaultErrorShape>>) => void) | undefined;
         onNext: (data: TOutput) => void;
     }) => void;
     useDehydratedState: (client: import("@trpc/react").TRPCClient<import("@trpc/server/dist/declarations/src/router").Router<{
@@ -1439,7 +1539,13 @@ export declare const trpc: {
         data: {
             data?: any;
         };
-    }, import(".prisma/client").Channel>>, "channel.">, import("@trpc/server").Prefixer<{}, "project."> & import("@trpc/server").Prefixer<Record<"onUpdate", import("@trpc/server/dist/declarations/src/internals/procedure").Procedure<{
+    }, {
+        uuid?: string | undefined;
+        key: string;
+        data: {
+            data?: any;
+        };
+    }>>, "channel.">, import("@trpc/server").Prefixer<{}, "project."> & import("@trpc/server").Prefixer<Record<"onUpdate", import("@trpc/server/dist/declarations/src/internals/procedure").Procedure<{
         session: import("next-auth").Session | null;
         prisma: import(".prisma/client").PrismaClient<import(".prisma/client").Prisma.PrismaClientOptions, never, import(".prisma/client").Prisma.RejectOnNotFound | import(".prisma/client").Prisma.RejectPerOperation | undefined>;
     }, {
@@ -1451,7 +1557,9 @@ export declare const trpc: {
     }, {
         uuid?: string | undefined;
         key: string;
-    }, import("@trpc/server").Subscription<import(".prisma/client").Channel>>>, "channel.">, import("@trpc/server").DefaultErrorShape>>, trpcState: import("react-query").DehydratedState | undefined) => import("react-query").DehydratedState | undefined;
+    }, import("@trpc/server").Subscription<{
+        data: import(".prisma/client").Prisma.JsonObject;
+    }>>>, "channel.">, import("@trpc/server").DefaultErrorShape>>, trpcState: import("react-query").DehydratedState | undefined) => import("react-query").DehydratedState | undefined;
     useInfiniteQuery: <TPath_3 extends never>(pathAndInput: [path: TPath_3, input: Omit<{
         "project.findAll": {
             input: void | null | undefined;
@@ -1617,7 +1725,13 @@ export declare const trpc: {
         data: {
             data?: any;
         };
-    }, import(".prisma/client").Channel>>, "channel.">, import("@trpc/server").Prefixer<{}, "project."> & import("@trpc/server").Prefixer<Record<"onUpdate", import("@trpc/server/dist/declarations/src/internals/procedure").Procedure<{
+    }, {
+        uuid?: string | undefined;
+        key: string;
+        data: {
+            data?: any;
+        };
+    }>>, "channel.">, import("@trpc/server").Prefixer<{}, "project."> & import("@trpc/server").Prefixer<Record<"onUpdate", import("@trpc/server/dist/declarations/src/internals/procedure").Procedure<{
         session: import("next-auth").Session | null;
         prisma: import(".prisma/client").PrismaClient<import(".prisma/client").Prisma.PrismaClientOptions, never, import(".prisma/client").Prisma.RejectOnNotFound | import(".prisma/client").Prisma.RejectPerOperation | undefined>;
     }, {
@@ -1629,7 +1743,9 @@ export declare const trpc: {
     }, {
         uuid?: string | undefined;
         key: string;
-    }, import("@trpc/server").Subscription<import(".prisma/client").Channel>>>, "channel.">, import("@trpc/server").DefaultErrorShape>>> | undefined) => import("react-query").UseInfiniteQueryResult<{
+    }, import("@trpc/server").Subscription<{
+        data: import(".prisma/client").Prisma.JsonObject;
+    }>>>, "channel.">, import("@trpc/server").DefaultErrorShape>>> | undefined) => import("react-query").UseInfiniteQueryResult<{
         "project.findAll": {
             input: void | null | undefined;
             output: (import(".prisma/client").Project & {
@@ -1752,7 +1868,13 @@ export declare const trpc: {
         data: {
             data?: any;
         };
-    }, import(".prisma/client").Channel>>, "channel.">, import("@trpc/server").Prefixer<{}, "project."> & import("@trpc/server").Prefixer<Record<"onUpdate", import("@trpc/server/dist/declarations/src/internals/procedure").Procedure<{
+    }, {
+        uuid?: string | undefined;
+        key: string;
+        data: {
+            data?: any;
+        };
+    }>>, "channel.">, import("@trpc/server").Prefixer<{}, "project."> & import("@trpc/server").Prefixer<Record<"onUpdate", import("@trpc/server/dist/declarations/src/internals/procedure").Procedure<{
         session: import("next-auth").Session | null;
         prisma: import(".prisma/client").PrismaClient<import(".prisma/client").Prisma.PrismaClientOptions, never, import(".prisma/client").Prisma.RejectOnNotFound | import(".prisma/client").Prisma.RejectPerOperation | undefined>;
     }, {
@@ -1764,7 +1886,9 @@ export declare const trpc: {
     }, {
         uuid?: string | undefined;
         key: string;
-    }, import("@trpc/server").Subscription<import(".prisma/client").Channel>>>, "channel.">, import("@trpc/server").DefaultErrorShape>>>;
+    }, import("@trpc/server").Subscription<{
+        data: import(".prisma/client").Prisma.JsonObject;
+    }>>>, "channel.">, import("@trpc/server").DefaultErrorShape>>>;
 };
 /**
  * This is a helper method to infer the output of a query resolver

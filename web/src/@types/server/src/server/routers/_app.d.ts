@@ -101,7 +101,13 @@ export declare const appRouter: import("@trpc/server/dist/declarations/src/route
     data: {
         data?: any;
     };
-}, import(".prisma/client").Channel>>, "channel.">, import("@trpc/server").Prefixer<{}, "project."> & import("@trpc/server").Prefixer<Record<"onUpdate", import("@trpc/server/dist/declarations/src/internals/procedure").Procedure<{
+}, {
+    uuid?: string | undefined;
+    key: string;
+    data: {
+        data?: any;
+    };
+}>>, "channel.">, import("@trpc/server").Prefixer<{}, "project."> & import("@trpc/server").Prefixer<Record<"onUpdate", import("@trpc/server/dist/declarations/src/internals/procedure").Procedure<{
     session: import("next-auth").Session | null;
     prisma: import(".prisma/client").PrismaClient<import(".prisma/client").Prisma.PrismaClientOptions, never, import(".prisma/client").Prisma.RejectOnNotFound | import(".prisma/client").Prisma.RejectPerOperation | undefined>;
 }, {
@@ -113,5 +119,7 @@ export declare const appRouter: import("@trpc/server/dist/declarations/src/route
 }, {
     uuid?: string | undefined;
     key: string;
-}, Subscription<import(".prisma/client").Channel>>>, "channel.">, import("@trpc/server").DefaultErrorShape>;
+}, Subscription<{
+    data: import(".prisma/client").Prisma.JsonObject;
+}>>>, "channel.">, import("@trpc/server").DefaultErrorShape>;
 export declare type AppRouter = typeof appRouter;

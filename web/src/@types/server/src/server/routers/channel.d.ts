@@ -30,7 +30,13 @@ export declare const channelRouter: import("@trpc/server/dist/declarations/src/r
     data: {
         data?: any;
     };
-}, Channel>>, Record<"onUpdate", import("@trpc/server/dist/declarations/src/internals/procedure").Procedure<{
+}, {
+    uuid?: string | undefined;
+    key: string;
+    data: {
+        data?: any;
+    };
+}>>, Record<"onUpdate", import("@trpc/server/dist/declarations/src/internals/procedure").Procedure<{
     session: import("next-auth").Session | null;
     prisma: PrismaClient<Prisma.PrismaClientOptions, never, Prisma.RejectOnNotFound | Prisma.RejectPerOperation | undefined>;
 }, {
@@ -42,4 +48,6 @@ export declare const channelRouter: import("@trpc/server/dist/declarations/src/r
 }, {
     uuid?: string | undefined;
     key: string;
-}, Subscription<Channel>>>, import("@trpc/server").DefaultErrorShape>;
+}, Subscription<{
+    data: Prisma.JsonObject;
+}>>>, import("@trpc/server").DefaultErrorShape>;
