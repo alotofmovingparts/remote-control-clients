@@ -1,230 +1,94 @@
 import { v4 as uuid } from 'uuid';
+import superjson from 'superjson'
+import { wsLink, createWSClient } from '@trpc/client/links/wsLink';
+import { createTRPCClient, TRPCClient } from '@trpc/client';
+import type { AppRouter } from './@types/server/src/server/routers/_app';
 
-type UUID = string;
-
-interface ClientMessage {
-  type: string;
-  uuid: UUID;
+interface RCClientOptions {
+  hostname: string;
+  channelKey: string;
+  secure?: boolean;
 }
 
-interface ClientConnectMessage extends ClientMessage {
-  type: "connect";
-}
+export default class RCClient {
+  uuid: string;
+  channelKey: string;
+  trpcClient: TRPCClient<AppRouter>;
 
-interface ClientSetMessage extends ClientMessage {
-  type: "set";
-  values: { [name: string]: string; }
-}
-
-interface ClientReadMessage extends ClientMessage {
-  type: "read";
-  names: string[];
-}
-
-interface ClientClientsMessage extends ClientMessage {
-  type: "clients";
-}
-
-interface ServerMessage {
-  type: string;
-}
-
-interface ServerSetResponseMessage extends ServerMessage {
-  type: "set_response";
-  uuid: UUID;
-}
-
-interface ServerReadResponseMessage extends ServerMessage {
-  type: "read_response";
-  values: { [name: string]: string; }
-  uuid: UUID;
-}
-
-interface ServerClientsResponseMessage extends ServerMessage {
-  type: "clients_response";
-  clients: string[];
-  uuid: UUID;
-}
-
-interface ServerConnectMessage extends ServerMessage {
-  type: "connect_response";
-  initialValues: { [name: string]: string; }
-  clients: string[];
-  uuid: UUID;
-}
-
-interface ServerUpdateMessage extends ServerMessage {
-  type: "update";
-  values: { [name: string]: string; }
-  clients: string[];
-}
-
-interface ServerErrorMessage extends ServerMessage {
-  type: "error";
-  message: string;
-  uuid?: UUID;
-}
-
-
-type TouchControlEventType = "connect" | "update" | "disconnect" | "error";
-
-enum TouchControlClientState {
-  Connecting = "CONNECTING",
-  Connected = "CONNECTED",
-  Disconnected = "DISCONNECTED"
-}
-
-export default class TouchControlClient extends EventTarget {
-  url: string;
-  ws?: WebSocket;
-  state: TouchControlClientState;
-  _callbacks: { [id: UUID]: (err: Error | null, ...args: any) => void }
-  _listeners: { [event: string]: ((...args: any) => void)[] }
-
-  constructor(url: string) {
-    super();
-    this.url = url;
-    this.state = TouchControlClientState.Disconnected;
-    this._callbacks = {};
-    this._listeners = {};
-  }
-
-  connect(callback?: (err: Error | null, initialValues?: any, clients?: any) => void) {
-    this.state = TouchControlClientState.Connecting;
-    this.ws = new WebSocket(this.url);
-    this.ws.onopen = (event: Event) => {
-      const id = uuid();
-      if (callback) this._callbacks[id] = callback;
-      const message: ClientConnectMessage = {
-        type: "connect",
-        uuid: id
-      }
-      this.ws?.send(JSON.stringify(message));
+  constructor(opts: RCClientOptions) {
+    if (typeof opts !== 'object') throw new Error('RCClient: options required')
+    if (
+      typeof opts['hostname'] !== 'string' ||
+      opts['hostname'] === '' ||
+      opts['hostname'].startsWith('http') 
+    ) {
+      throw new Error(`RCClient: 'hostname' required, e.g. 'example.com'`)
     }
-    this.ws.onclose = (event: CloseEvent) => {
-      this.state = TouchControlClientState.Disconnected;
-      this.dispatchEvent(new CustomEvent('disconnect'));
-    };
-    this.ws.onmessage = (event: MessageEvent) => {
-      const data = JSON.parse(event.data) as ServerMessage;
-      let message:
-        ServerSetResponseMessage |
-        ServerReadResponseMessage |
-        ServerClientsResponseMessage |
-        ServerConnectMessage |
-        ServerUpdateMessage |
-        ServerErrorMessage;
-      switch (data.type) {
-        case "set_response":
-          message = data as ServerSetResponseMessage;
-          if (message.uuid in this._callbacks) {
-            const callback = this._callbacks[message.uuid]
-            delete this._callbacks[message.uuid];
-            callback(null);
-          }
-          break;
-        case "read_response":
-          message = data as ServerReadResponseMessage;
-          if (message.uuid in this._callbacks) {
-            const callback = this._callbacks[message.uuid]
-            delete this._callbacks[message.uuid];
-            const keys = Object.keys(message.values);
-            if (keys.length > 1) {
-              callback(null, message.values);
-            } else {
-              const name = keys[0];
-              callback(null, message.values[name]);
-            }            
-          }
-          break;
-        case "clients_response":
-          message = data as ServerClientsResponseMessage;
-          if (message.uuid in this._callbacks) {
-            const callback = this._callbacks[message.uuid]
-            delete this._callbacks[message.uuid];
-            callback(null, message.clients);
-          }
-          break;
-        case "connect_response":
-          message = data as ServerConnectMessage;
-          this.state = TouchControlClientState.Connected;
-          if (message.uuid in this._callbacks) {
-            const callback = this._callbacks[message.uuid]
-            delete this._callbacks[message.uuid];
-            callback(null, message.initialValues, message.clients);
-          }
-          this.dispatchEvent(new CustomEvent('connect', { detail: message}));
-          break;
-        case "update":
-          message = data as ServerUpdateMessage;
-          this.dispatchEvent(new CustomEvent('update', { detail: message}));
-          break;
-        case "error":
-          message = data as ServerErrorMessage;
-          if (message.uuid && message.uuid in this._callbacks) {
-            const callback = this._callbacks[message.uuid]
-            delete this._callbacks[message.uuid];
-            callback(new Error(message.message));
-          }
-          this.dispatchEvent(new CustomEvent('error', { detail: message}));
-          break;
-        default:
-          break;
-      }
-    };
-    this.ws.onerror = (event: Event) => {
-      const message: ServerErrorMessage = {
-        type: "error",
-        message: String(event)
-      }
-      this.dispatchEvent(new CustomEvent('error', { detail: message}));
-    };
+    if (
+      typeof opts['channelKey'] !== 'string' ||
+      !(new RegExp('^[A-Za-z0-9-_.~]*$')).test(opts['channelKey'])
+    ) {
+      throw new Error(`RCClient: 'channelKey' required, e.g. 'abcdefghij_0123456789'`)
+    }
+    const {hostname, channelKey, secure = true} = opts;
+    this.uuid = uuid();
+    this.channelKey = channelKey;
+
+    const clientBase = `${secure ? 'https' : 'http'}://${hostname}`;
+    const clientURL = new URL('/api/trpc', clientBase).toString();
+    const wsURL = `${secure ? 'wss' : 'ws'}://${hostname}`
+    const wsClient = createWSClient({
+      url: wsURL,
+    });
+    const link = wsLink<AppRouter>({
+      client: wsClient,
+    });
+    this.trpcClient = createTRPCClient<AppRouter>({
+      url: clientURL,
+      links: [link],
+      transformer: superjson,
+    });
   }
 
-  set(name: string, value: any, callback?: (err: Error | null) => void) {
-    const id = uuid();
-    if (callback) this._callbacks[id] = callback;
-    const message: ClientSetMessage = {
-      type: "set",
-      values: {
-        [name]: value
+  async update(data: {[name: string]: any }, callback?: (err: unknown | null) => void) {
+    try {
+      await this.trpcClient.mutation('channel.update', {
+        key: this.channelKey,
+        data: {
+          data
+        },
+        uuid: this.uuid
+      });
+      if (callback) callback(null);
+    } catch (error) {
+      if (callback) callback(error);
+    }
+  }
+
+  subscribe(callback: (err: unknown | null, data?: {[name: string]: any; }) => void) {
+    return this.trpcClient.subscription(
+      'channel.onUpdate',
+      {
+        key: this.channelKey,
+        uuid: this.uuid
       },
-      uuid: id
+      {
+        onNext: (res) => {
+          if (res.type === 'data') {
+            callback(null, res.data.data as {[name: string]: any });
+          }
+        },
+        onError: (err) => callback(err),
+      }
+    )
+  }
+
+  async read(callback: (err: unknown | null, data?: { [name: string]: any; }) => void) {
+    try {
+      const data = await this.trpcClient.query('channel.read', this.channelKey);
+      callback(null, data.data as {[name: string]: any });
+    } catch (error) {
+      callback(error);
     }
-    this.ws?.send(JSON.stringify(message));
-  }
-
-  read(name?: string, callback?: (err: Error | null, value?: string | { [name: string]: string; }) => void) {
-    const id = uuid();
-    if (callback) this._callbacks[id] = callback;
-    const names = name ? [name] : [];
-    const message: ClientReadMessage = {
-      type: "read",
-      names,
-      uuid: id
-    }
-    this.ws?.send(JSON.stringify(message));
-  }
-  
-  clients(callback?: (err: Error | null) => void) {
-    const id = uuid();
-    if (callback) this._callbacks[id] = callback;
-    const message: ClientClientsMessage = {
-      type: "clients",
-      uuid: id
-    }
-    this.ws?.send(JSON.stringify(message));
-  }
-
-  disconnect() {
-    this.ws?.close();
-  }
-
-  on(name: string, listener: (...args: any) => void) {
-    this.addEventListener(name, listener);
-  }
-
-  off(name: string, listener: (...args: any) => void) {
-    this.removeEventListener(name, listener);
   }
 }
