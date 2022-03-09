@@ -16,8 +16,10 @@ export default class RCClient {
     subscribe(callback: (err: unknown | null, data?: {
         [name: string]: any;
     }) => void): import("@trpc/client/dist/declarations/src/internals/observable").UnsubscribeFn;
-    read(callback: (err: unknown | null, data?: {
+    read(callback?: (err: unknown | null, data?: {
         [name: string]: any;
-    }) => void): Promise<void>;
+    }) => void): Promise<{
+        [name: string]: any;
+    } | undefined>;
 }
 export {};

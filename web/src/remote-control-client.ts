@@ -91,13 +91,21 @@ export default class RCClient {
   }
 
   async read(
-    callback: (err: unknown | null, data?: { [name: string]: any }) => void
+    callback?: (err: unknown | null, data?: { [name: string]: any }) => void
   ) {
     try {
       const data = await this.trpcClient.query('channel.read', this.channelKey);
-      callback(null, data.data as { [name: string]: any });
+      if (callback) {
+        callback(null, data.data as { [name: string]: any });
+      } else {
+        return data.data as { [name: string]: any };
+      }
     } catch (error) {
-      callback(error);
+      if (callback) {
+        callback(error);
+      } else {
+        throw error;
+      }
     }
   }
 }

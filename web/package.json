@@ -2,18 +2,18 @@
   "name": "remote-control-clients",
   "type": "module",
   "version": "0.0.1",
-  "source": "src/index.ts",
+  "source": "src/remote-control-client.ts",
   "exports": {
-    "require": "./dist/index.cjs",
-    "default": "./dist/index.modern.js"
+    "require": "./dist/remote-control-client.cjs",
+    "default": "./dist/remote-control-client.modern.js"
   },
-  "main": "./dist/index.cjs",
-  "module": "./dist/index.module.js",
-  "unpkg": "./dist/index.umd.js",
+  "main": "./dist/remote-control-client.cjs",
+  "module": "./dist/remote-control-client.module.js",
+  "unpkg": "./dist/remote-control-client.umd.js",
   "amdName": "RCClient",
   "scripts": {
-    "build": "microbundle",
-    "dev": "microbundle watch"
+    "build": "microbundle src/remote-control-client.ts",
+    "dev": "microbundle watch src/remote-control-client.ts"
   },
   "devDependencies": {
     "@trpc/client": "^9.16.0",
